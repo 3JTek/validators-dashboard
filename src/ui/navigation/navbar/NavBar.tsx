@@ -1,10 +1,11 @@
+import Link from "next/link";
 import NavBarCtas from "./NavBarCtas";
 import NavBarItems from "./NavBarItems";
 import NavBarTitle from "./NavBarTitle";
 
 const NavBar = () => {
   return (
-    <nav className="flex flex-row items-center py-4">
+    <nav className="flex h-16 flex-row items-center">
       <NavBarTitle />
       <NavBarItems></NavBarItems>
       <NavBarCtas />

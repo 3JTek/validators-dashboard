@@ -4,6 +4,7 @@ const config: Config = {
   content: ["./src/ui/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     colors: {
+      transparent: "transparent",
       black: "#121213",
       gray: {
         100: "#F3F6F8",
@@ -12,6 +13,7 @@ const config: Config = {
       white: "#F3F6F8",
       blue: "#6398FF",
     },
+
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
