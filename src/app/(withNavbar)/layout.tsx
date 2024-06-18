@@ -1,13 +1,17 @@
-import NavBar from "@/ui/navigation/NavBar";
+import NavBar from "@/ui/navigation/navbar/NavBar";
 
 import { ReactNode } from "react";
 import Container from "../../ui/layout/Container";
+import Menu from "@/ui/menu/Menu";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function WithNavBarLayout({ children }: { children: ReactNode }) {
   return (
     <Container>
       <NavBar />
-      <main>{children}</main>
+      <main>
+        <Menu />
+        {children}
+      </main>
     </Container>
   );
 }
