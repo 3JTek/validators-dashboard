@@ -4,26 +4,21 @@ import Link from "@/ui/navigation/Link";
 import { usePathname } from "next/navigation";
 import Search from "@/ui/controls/Search";
 
-const menuItems = [
-  { name: "overview", path: "/overview" },
-  { name: "validators", path: "/validators" },
-];
+type MenuProps = {
+  items: { name: string; path: string }[];
+  activeIndex?: number;
+};
 
-const Menu = () => {
-  const pathName = usePathname().split("/")[1];
-
+const Menu = ({ items, activeIndex }: MenuProps) => {
   return (
     <div className="flex h-16 items-center">
-      <div className="flex flex-grow">
-        {menuItems.map((item) => (
-          <div key={item.path} className="mr-3">
-            <Link active={item.name === pathName} path={item.path}>
-              {item.name}
-            </Link>
-          </div>
-        ))}
-      </div>
-      <Search />
+      {items.map((item, index) => (
+        <div key={item.path} className="mr-3">
+          <Link active={index === activeIndex} path={item.path}>
+            {item.name}
+          </Link>
+        </div>
+      ))}
     </div>
   );
 };

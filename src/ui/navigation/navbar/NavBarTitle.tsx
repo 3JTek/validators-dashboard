@@ -1,8 +1,10 @@
+import Heading from "@/ui/typography/Heading";
+
 const NavBarTitle = () => {
   return (
     <div className="grow">
       <a href="/">
-        <h3 className="font-bold text-white">Skip/Select</h3>
+        <Heading type="h3">Skip/Select</Heading>
       </a>
     </div>
   );

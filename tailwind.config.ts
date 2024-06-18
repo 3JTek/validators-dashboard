@@ -7,11 +7,10 @@ const config: Config = {
       transparent: "transparent",
       black: "#121213",
       gray: {
-        100: "#F3F6F8",
+        100: "#F3F6F880",
         200: "#D9D9D9",
       },
       white: "#F3F6F8",
-      blue: "#6398FF",
     },
 
     extend: {
