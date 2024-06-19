@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const mainMenuItems = [
   { name: "overview", path: "/overview" },
-  { name: "validators", path: "/validators/a/b" },
+  { name: "validators", path: "/validators/osmosis" },
 ];
 
 const MainMenu = () => {

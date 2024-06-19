@@ -9,7 +9,7 @@ type SearchProps = {
 
 const Search = ({ placeholder }: SearchProps) => {
   return (
-    <div className="border-gray-100 flex items-center rounded-md border px-2 py-1">
+    <div className="flex items-center px-2 py-1 border border-gray-100 rounded-md">
       <div className="mr-1">
         <Image src={MagnifierIcon} alt="search" width={20} height={20} />
       </div>
@@ -19,7 +19,7 @@ const Search = ({ placeholder }: SearchProps) => {
           <Image src={CommandKeyIcon} alt="search" width={8} />
         </div>
       </div>
-      <div className="relative flex h-5 w-5 items-center justify-center rounded bg-white bg-opacity-10">
+      <div className="relative flex items-center justify-center w-5 h-5 bg-white rounded bg-opacity-10">
         <div className="absolute bottom-0 -translate-y-1">
           <Image src={KKeyIcon} alt="search" width={8} />
         </div>
