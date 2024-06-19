@@ -1,12 +1,13 @@
 "use client";
 
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
-import { useMemo } from "react";
+import { useCallback, useMemo, useRef } from "react";
 
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { ValidatorData } from "./useFetchValidatorData";
 import { RowClassRules } from "ag-grid-community";
+import { useValidatorDataContext } from "./useValidatorDataContext";
 
 const tableCustomization = `
   .ag-theme-quartz-dark {
@@ -42,18 +43,34 @@ type ValidatorListProps = {
   validatorData: ValidatorData[] | undefined;
 };
 
+type ValidatorRow = {
+  "#": number;
+  Validator: string;
+  "MEV Rev - Total": number;
+  "MEV Rev - Kept": number;
+  Bundles: number;
+};
+
 const ValidatorsList = ({ validatorData }: ValidatorListProps) => {
+  const { setValidatorSelected } = useValidatorDataContext();
+
+  const gridRef = useRef<AgGridReact<ValidatorRow>>(null);
+
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
 
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
 
-  const rowData = validatorData.map((validator, index) => ({
-    "#": index + 1,
-    Validator: validator.Name,
-    "MEV Rev - Total": validator.TotalMEVRevenue,
-    "MEV Rev - Kept": validator.TotalMEVShared,
-    Bundles: validator.bundles,
-  }));
+  const rowData: ValidatorRow[] = useMemo(
+    () =>
+      validatorData!.map((validator, index) => ({
+        "#": index + 1,
+        Validator: validator.Name,
+        "MEV Rev - Total": validator.TotalMEVRevenue,
+        "MEV Rev - Kept": validator.TotalMEVShared,
+        Bundles: validator.bundles,
+      })),
+    [validatorData],
+  );
 
   const columnDefs = useMemo(
     () => [
@@ -91,12 +108,27 @@ const ValidatorsList = ({ validatorData }: ValidatorListProps) => {
     return {};
   }, []);
 
+  const onSelectionChanged = useCallback(() => {
+    const selectedRows = gridRef.current!.api.getSelectedRows();
+
+    const validatorDetails = validatorData!.find((validator) => validator.Name === selectedRows[0].Validator);
+
+    setValidatorSelected(validatorDetails || null);
+  }, []);
+
   return (
     <>
       <style>{tableCustomization}</style>
       <div style={containerStyle}>
         <div style={gridStyle} className={"ag-theme-quartz-dark"}>
-          <AgGridReact rowData={rowData} columnDefs={columnDefs} rowClassRules={rowClassRules} />
+          <AgGridReact
+            ref={gridRef}
+            rowSelection="single"
+            onSelectionChanged={onSelectionChanged}
+            rowData={rowData}
+            columnDefs={columnDefs}
+            rowClassRules={rowClassRules}
+          />
         </div>
       </div>
     </>

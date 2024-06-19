@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ChainMenu from "./components/ValidatorsChainMenu";
 import ValidatorsDetailsSection from "./components/ValidatorsDetailsSection";
 import ValidatorsHeader from "./components/ValidatorsHeader";
@@ -28,9 +28,7 @@ export default function Page({ params }: { params: { chainName: string; validato
             </>
           )}
         </div>
-        <div>
-          <ValidatorsDetailsSection />
-        </div>
+        <ValidatorsDetailsSection />
       </div>
     </div>
   );
