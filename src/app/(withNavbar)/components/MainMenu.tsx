@@ -1,5 +1,7 @@
 "use client";
 
+import CommandKeyIcon from "@/assets/icons/command_key.svg";
+import KKeyIcon from "@/assets/icons/k_key.svg";
 import Search from "@/ui/controls/Search";
 import Menu from "@/ui/menu/Menu";
 import { usePathname } from "next/navigation";
@@ -20,7 +22,7 @@ const MainMenu = () => {
         <Menu items={mainMenuItems} activeIndex={activeIndex} />
       </div>
       <div>
-        <Search placeholder="Search..." />
+        <Search placeholder="Search..." icons={[CommandKeyIcon, KKeyIcon]} />
       </div>
     </div>
   );
