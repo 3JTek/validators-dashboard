@@ -4,6 +4,9 @@ import Head from "next/head";
 import PaymentIcon from "@/assets/icons/payment.svg";
 import Image from "next/image";
 
+import CurrencyText from "@/ui/formatting/Currency";
+import { Currency } from "@/helpers/currencyFormatter";
+
 type ValidatorsDetailsSectionItemProps = {
   title: string;
   value: number;
@@ -19,7 +22,7 @@ const ValidatorsDetailsSectionItem = ({ title, value }: ValidatorsDetailsSection
         <p className="text-sm text-gray-100">{title}</p>
       </div>
       <div className="mb-10">
-        <p>{value}</p>
+        <CurrencyText value={value} currency={Currency.USD}></CurrencyText>
       </div>
     </div>
   );

@@ -3,10 +3,12 @@
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import { useCallback, useMemo, useRef } from "react";
 
+import { Currency, currencyFormatter } from "@/helpers/currencyFormatter";
+
+import { RowClassRules } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { ValidatorData } from "./useFetchValidatorData";
-import { RowClassRules } from "ag-grid-community";
 import { useValidatorDataContext } from "./useValidatorDataContext";
 
 const tableCustomization = `
@@ -56,8 +58,9 @@ const ValidatorsList = ({ validatorData }: ValidatorListProps) => {
 
   const gridRef = useRef<AgGridReact<ValidatorRow>>(null);
 
-  const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
+  const formatInUsd = ({ value }: { value: number }) => currencyFormatter(value, Currency.USD);
 
+  const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
 
   const rowData: ValidatorRow[] = useMemo(
@@ -89,16 +92,19 @@ const ValidatorsList = ({ validatorData }: ValidatorListProps) => {
         field: "MEV Rev - Total",
         flex: 2,
         headerClass: "ag-header-custom",
+        valueFormatter: formatInUsd,
       },
       {
         field: "MEV Rev - Kept",
         flex: 2,
         headerClass: "ag-header-custom",
+        valueFormatter: formatInUsd,
       },
       {
         field: "Bundles",
         flex: 2,
         headerClass: "ag-header-custom",
+        valueFormatter: formatInUsd,
       },
     ],
     [],
