@@ -1,12 +1,13 @@
 import MagnifierIcon from "@/assets/icons/magnifier.svg";
+import { StaticImageData } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 
 type SearchProps = {
   placeholder: string;
-  icons: string[];
+  icons?: StaticImageData[];
 };
 
-const SearchIcon = ({ icon }: { icon: string }) => (
+const SearchIcon = ({ icon }: { icon: StaticImageData }) => (
   <div className="relative mr-0.5 flex h-5 w-5 items-center justify-center rounded bg-white bg-opacity-10">
     <div className="absolute bottom-0 -translate-y-1">
       <Image src={icon} alt="search" width={8} />
@@ -22,7 +23,7 @@ const Search = ({ placeholder, icons = [] }: SearchProps) => {
       </div>
       <input type="text" placeholder={placeholder} className="bg-transparent" />
       {icons.map((icon) => (
-        <SearchIcon icon={icon} />
+        <SearchIcon key={icon.src} icon={icon} />
       ))}
     </div>
   );
