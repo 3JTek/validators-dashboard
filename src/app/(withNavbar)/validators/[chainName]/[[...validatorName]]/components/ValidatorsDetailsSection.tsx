@@ -3,22 +3,22 @@ import ValidatorsDetailsSectionItem from "./ValidatorsDetailsSectionItem";
 import { useValidatorDataContext } from "./useValidatorDataContext";
 
 const ValidatorsDetailsSection = () => {
-  const { validatorSelected } = useValidatorDataContext();
+  const { selectedValidator } = useValidatorDataContext();
 
-  if (!validatorSelected) return null;
+  if (!selectedValidator) return null;
 
   const displayedValues = [
     {
       title: "Number of bundles",
-      value: validatorSelected.bundles,
+      value: selectedValidator.bundles,
     },
     {
       title: "Total MEV Revenue",
-      value: validatorSelected.TotalMEVRevenue,
+      value: selectedValidator.TotalMEVRevenue,
     },
     {
       title: "Total MEV Shared",
-      value: validatorSelected.TotalMEVShared,
+      value: selectedValidator.TotalMEVShared,
     },
   ];
 

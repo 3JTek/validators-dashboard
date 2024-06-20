@@ -4,20 +4,31 @@ import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { ValidatorData } from "./useFetchValidatorData";
 
 interface ValidatorDataContext extends PropsWithChildren {
-  validatorSelected: ValidatorData | null | undefined;
+  selectedValidator: ValidatorData | null | undefined;
   setValidatorSelected: (validatorSelected: ValidatorData | null | undefined) => void;
+  search: string;
+  updateSearch: (search: string) => void;
 }
 
 const ValidatorDataContextProvider = createContext<ValidatorDataContext | null>(null);
 
 export const ValidatorDataProvider = ({ children }: PropsWithChildren) => {
-  const [validatorSelected, setValidatorSelected] = useState<ValidatorData | null | undefined>(undefined);
+  const [selectedValidator, setSelectedValidator] = useState<ValidatorData | null | undefined>(undefined);
+  const [search, setSearch] = useState<string>("");
+
+  //TODO: implement reducer instead of creating login in provider
+  const updateSearch = (search: string) => {
+    setSearch(search);
+    setSelectedValidator(null);
+  };
 
   return (
     <ValidatorDataContextProvider.Provider
       value={{
-        validatorSelected,
-        setValidatorSelected,
+        selectedValidator,
+        setValidatorSelected: setSelectedValidator,
+        search,
+        updateSearch,
       }}
     >
       {children}

@@ -39,7 +39,7 @@ const useFetchValidatorData = (chainName: string) => {
 
         delay(2000); //This is a UI trick to keep a consistent loading time and avoid screen flicking.
 
-        const [response] = await Promise.all([apiCall, delay(2000)]);
+        const [response] = await Promise.all([apiCall, delay(1000)]);
 
         dispatch({ data: response.data.validator_infos, error: null, isLoading: false });
       } catch (error: AxiosError | any) {

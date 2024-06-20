@@ -42,7 +42,7 @@ const tableCustomization = `
 `;
 
 type ValidatorListProps = {
-  validatorData: ValidatorData[] | undefined;
+  validatorData: ValidatorData[] | null | undefined;
 };
 
 type ValidatorRow = {
@@ -58,7 +58,12 @@ const ValidatorsListData = ({ validatorData }: ValidatorListProps) => {
 
   const gridRef = useRef<AgGridReact<ValidatorRow>>(null);
 
-  const formatInUsd = ({ value }: { value: number }) => currencyFormatter(value, Currency.USD);
+  const formatInUsd = useMemo(
+    () =>
+      ({ value }: { value: number }) =>
+        currencyFormatter(value, Currency.USD),
+    [],
+  );
 
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
@@ -112,15 +117,17 @@ const ValidatorsListData = ({ validatorData }: ValidatorListProps) => {
 
   const rowClassRules = useMemo<RowClassRules>(() => {
     return {};
-  }, []);
+  }, [validatorData]);
 
   const onSelectionChanged = useCallback(() => {
     const selectedRows = gridRef.current!.api.getSelectedRows();
 
+    if (!selectedRows.length) return;
+
     const validatorDetails = validatorData!.find((validator) => validator.Name === selectedRows[0].Validator);
 
     setValidatorSelected(validatorDetails || null);
-  }, []);
+  }, [validatorData]);
 
   return (
     <>

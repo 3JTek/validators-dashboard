@@ -8,11 +8,14 @@ import ValidatorsListData from "./components/ValidatorsListData";
 import ValidatorsListError from "./components/ValidatorsListError";
 import ValidatorsListLoading from "./components/ValidatorsListLoading";
 import useFetchValidatorData from "./components/useFetchValidatorData";
+import useFilterValidatorData from "./components/useFilterValidatorData";
 
 export default function Page({ params }: { params: { chainName: string; validatorName: string } }) {
   const { chainName, validatorName } = params;
 
   const { data, error, isLoading } = useFetchValidatorData(chainName);
+
+  const filteredData = useFilterValidatorData(data);
 
   return (
     <div>
@@ -24,7 +27,7 @@ export default function Page({ params }: { params: { chainName: string; validato
             <ValidatorsList>
               {isLoading && <ValidatorsListLoading />}
               {error && <ValidatorsListError error={error} />}
-              {data && <ValidatorsListData validatorData={data} />}
+              {filteredData && <ValidatorsListData validatorData={filteredData} />}
             </ValidatorsList>
           </div>
         </div>

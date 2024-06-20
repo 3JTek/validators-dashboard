@@ -1,10 +1,13 @@
 import MagnifierIcon from "@/assets/icons/magnifier.svg";
+import debounce from "@/helpers/debounce";
 import { StaticImageData } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
+import { useMemo } from "react";
 
 type SearchProps = {
   placeholder: string;
   icons?: StaticImageData[];
+  handleChange: (search: string) => void;
 };
 
 const SearchIcon = ({ icon }: { icon: StaticImageData }) => (
@@ -15,13 +18,21 @@ const SearchIcon = ({ icon }: { icon: StaticImageData }) => (
   </div>
 );
 
-const Search = ({ placeholder, icons = [] }: SearchProps) => {
+const Search = ({ placeholder, icons = [], handleChange }: SearchProps) => {
+  const emitSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(e.target.value);
+  };
+
+  const handleSearchChange = useMemo(() => {
+    return debounce(emitSearchChange, 300);
+  }, []);
+
   return (
     <div className="flex items-center rounded-md border border-gray-100 px-2 py-1">
       <div className="mr-1">
         <Image src={MagnifierIcon} alt="search" width={20} height={20} />
       </div>
-      <input type="text" placeholder={placeholder} className="bg-transparent" />
+      <input type="text" placeholder={placeholder} className="bg-transparent" onChange={handleSearchChange} />
       {icons.map((icon) => (
         <SearchIcon key={icon.src} icon={icon} />
       ))}
